@@ -1,0 +1,49 @@
+package midtermcode;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class EmployeeCRUD {
+
+	
+	public static void main(String[] args) {
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/1222", "root", "root");
+			Statement statement=connection.createStatement();
+			System.out.println("Display Data");
+			ResultSet set=statement.executeQuery("select * from employee");
+			while(set.next())
+			{
+				System.out.println(set.getInt(1)+"  "+set.getString(2));
+			}
+			
+			
+			System.out.println("Insert Data");
+			Scanner scanner=new Scanner(System.in);
+			System.out.println("Enter Name");
+			statement.executeUpdate("insert into employee(name) values('"+scanner.next()+"')");
+			System.out.println("Data Insetred");
+			
+			
+			System.out.println("Enter Name and id to update");
+			statement.executeUpdate("update employee SET name='"+scanner.next()+"' where id='"+scanner.nextInt()+"'");
+			System.out.println("Data Updated");
+			
+			System.out.println("Enter id to delete");
+			statement.executeUpdate("delete from  employee where id='"+scanner.nextInt()+"'");
+			System.out.println("Data delete");
+			
+			
+		}
+		catch (Exception e) {
+		System.out.println(e);
+		}
+		
+	}
+}
+
+
+
